@@ -6,6 +6,7 @@ import sublime_plugin
 
 from .configs import *
 
+
 class SyncPreferencesCommand(sublime_plugin.TextCommand):
 
     settings = sublime.load_settings(SYNC_PREFERENCES_FILE)
@@ -18,11 +19,8 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
     def get_files_to_sync(self):
         package_location = self.settings.get(USER_PACKAGE_LOCATION)
         exclude_files = self.settings.get(FILES_TO_EXCLUDE)
-        files_to_sync = [ file
-            for file in os.listdir(package_location)
-            if os.path.isfile(os.path.join(package_location, file))
-            and file not in exclude_files
-            ]
+        files_to_sync = [file for file in os.listdir(package_location) if os.path.isfile(
+            os.path.join(package_location, file)) and file not in exclude_files]
         return files_to_sync
 
     def _get_user_id(self):

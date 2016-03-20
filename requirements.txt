@@ -1,5 +1,12 @@
+astroid==1.4.4
 bottle==0.12.9
+colorama==0.3.7
+lazy-object-proxy==1.2.1
 pdb==0.1
+pep8==1.7.0
+pylint==1.5.4
 pymongo==3.2.1
 python-gnupg==0.3.8
 PyYAML==3.11
+six==1.10.0
+wrapt==1.10.6
