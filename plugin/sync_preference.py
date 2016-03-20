@@ -12,9 +12,8 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
 
     def sync_files(self):
         files_to_sync = self.get_files_to_sync()
-        unique_id = uuid.uuid4()
-        self.save_id(unique_id)
-        print("saving for {0} with {1}".format(unique_id, files_to_sync))
+        user_id = self._get_user_id()
+        print("saving for {0} with {1}".format(user_id, files_to_sync))
 
     def get_files_to_sync(self):
         package_location = self.settings.get(USER_PACKAGE_LOCATION)
@@ -26,8 +25,16 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
             ]
         return files_to_sync
 
-    def save_id(self, id):
-        self.settings.set("unique_id", str(id))
+    def _get_user_id(self):
+        user_id = self.settings.get(USER_ID)
+        if not user_id:
+            print("Generating user_id for first time")
+            user_id = uuid.uuid4()
+            self._save_id(user_id)
+        return user_id
+
+    def _save_id(self, id):
+        self.settings.set(USER_ID, str(id))
 
     def run(self, edit):
         self.sync_files()
