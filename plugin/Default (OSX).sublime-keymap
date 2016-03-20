@@ -1,0 +1,3 @@
+[
+    { "keys": ["alt+super+p"], "command": "sync_preferences" }
+]
