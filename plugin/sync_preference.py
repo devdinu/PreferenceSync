@@ -1,20 +1,21 @@
 import os
 import uuid
-import pdb
 import sublime
 import sublime_plugin
 
+from .sync_api import SyncApi
 from .configs import *
 
 
 class SyncPreferencesCommand(sublime_plugin.TextCommand):
 
     settings = sublime.load_settings(SYNC_PREFERENCES_FILE)
+    sync_api = SyncApi()
 
     def sync_files(self):
         files_to_sync = self.get_files_to_sync()
         user_id = self._get_user_id()
-        print("saving for {0} with {1}".format(user_id, files_to_sync))
+        self.sync_api.sync_file_names(user_id, files_to_sync)
 
     def get_files_to_sync(self):
         package_location = self.settings.get(USER_PACKAGE_LOCATION)
