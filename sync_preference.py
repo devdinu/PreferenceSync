@@ -44,3 +44,52 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.sync_files()
         sublime.save_settings(SYNC_PREFERENCES_FILE)
+
+
+class SyncToLocalCommand(sublime_plugin.TextCommand):
+
+    sync_api = SyncApi()
+
+    def sync_to_local(self, uuid):
+        self.archive_old_user_folder()
+        self.download_files(uuid, self.sync_api.get_files_to_download(uuid))
+
+    def download_files(self, user_id, files):
+        print("downloading files.." + str(files))
+        package_location = Util.get_user_package_location()
+        for file in files:
+            file_content = self.sync_api.get_file_contents(user_id, file)
+            if file_content:
+                self._save_file_content(package_location, file, file_content)
+                print("saving response content:" + str(file_content))
+
+    def archive_old_user_folder(self):
+        timestamp = datetime.datetime.utcnow().strftime("%F:%T")
+        archive_name = os.environ['TMPDIR'] + "user_pkg_" + timestamp
+        package_location = Util.get_user_package_location()
+        print("archiving..." + archive_name + "dir:" + package_location)
+        resulted_archive = shutil.make_archive(archive_name, 'gztar', root_dir=package_location)
+        print("archived: " + resulted_archive)
+
+    def on_uuid_entered(self, input_uuid):
+        if self._is_valid_uuid(input_uuid):
+            print("sync to local for " + input_uuid)
+            self.sync_to_local(input_uuid)
+
+    def _is_valid_uuid(self, uuid):
+        try:
+            value = UUID(uuid)
+        except ValueError:
+            return False
+        return str(value) == uuid
+
+    def run(self, edit):
+        self._get_uuid_from_user()
+
+    def _save_file_content(self, dir_name, file_name, file_content):
+        with open(os.path.join(dir_name, file_name), 'w+') as file:
+            file.write(file_content)
+
+    def _get_uuid_from_user(self):
+        self.view.window().show_input_panel(
+            "Enter UUID to Sync files to local:", "", self.on_uuid_entered, None, None)
