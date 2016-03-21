@@ -1,3 +1,4 @@
 [
-    { "keys": ["alt+super+p"], "command": "sync_preferences" }
+    { "keys": ["alt+super+u"], "command": "sync_preferences" },
+    { "keys": ["alt+super+l"], "command": "sync_to_local" }
 ]
