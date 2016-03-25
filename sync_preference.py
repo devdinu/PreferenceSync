@@ -42,9 +42,13 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
     def _save_id(self, id):
         self.settings.set(USER_ID, str(id))
 
-    def run(self, edit):
+    def sync_and_save_settings(self):
         self.sync_files()
         sublime.save_settings(SYNC_PREFERENCES_FILE)
+
+    def run(self, edit):
+        Thread(target=self.sync_and_save_settings).start()
+
 
 
 class SyncToLocalCommand(sublime_plugin.TextCommand):
