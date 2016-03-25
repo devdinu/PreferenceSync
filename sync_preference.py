@@ -1,11 +1,11 @@
 import os
 import uuid
 import shutil
-from uuid import UUID
 import datetime
-
 import sublime
 import sublime_plugin
+from threading import Thread
+from uuid import UUID
 from .util import Util
 from .sync_api import SyncApi
 from .configs import *
@@ -16,6 +16,7 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
     sync_api = SyncApi()
 
     def sync_files(self):
+        print("sync files in progres...")
         files_to_sync = self.get_files_to_sync()
         user_id = self._get_user_id()
         self.sync_api.sync_file_names(user_id, files_to_sync)
@@ -74,7 +75,7 @@ class SyncToLocalCommand(sublime_plugin.TextCommand):
     def on_uuid_entered(self, input_uuid):
         if self._is_valid_uuid(input_uuid):
             print("sync to local for " + input_uuid)
-            self.sync_to_local(input_uuid)
+            Thread(target=self.sync_to_local, args=(input_uuid,)).start()
 
     def _is_valid_uuid(self, uuid):
         try:

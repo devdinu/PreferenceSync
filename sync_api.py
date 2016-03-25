@@ -4,7 +4,7 @@ import json
 
 
 class SyncApi:
-    host = "http://localhost:8888/"
+    host = "http://prefsync-liveasdev.rhcloud.com/"
 
     def sync_file_names(self, id, files):
         print("saving for {0} with {1}".format(id, files))
