@@ -1,3 +1,4 @@
 .tags
 .python-version
 .idea
+*.pyc

@@ -1,0 +1,14 @@
+{
+   "schema_version": "3.0.0",
+   "name": "PreferenceSync",
+   "details": "https://github.com/dineshkumar-cse/PreferenceSync",
+   "author": "Dinesh Kumar",
+   "description": "Plugin which syncs user packages folder in service, and can be restored",
+   "home_page": "https://github.com/dineshkumar-cse/PreferenceSync",
+   "releases": [
+       {
+               "sublime_text": "*",
+               "tags": true
+       }
+   ]
+}
