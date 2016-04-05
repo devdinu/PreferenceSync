@@ -7,7 +7,7 @@
    "home_page": "https://github.com/dineshkumar-cse/PreferenceSync",
    "releases": [
        {
-               "sublime_text": "*",
+               "sublime_text": ">=3000",
                "tags": true
        }
    ]
