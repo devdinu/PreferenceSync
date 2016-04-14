@@ -23,7 +23,22 @@ To change Trigger for Download / Upload change the keymap file content to your o
     { "keys": ["alt+super+l"], "command": "sync_to_local" }
 ]
 ```
+linux and windows keymap:
+- `alt+ctrl+u` in for sync_preferences (uploading).
+- `alt+ctrl+l` to sync to local (downloading).
 
 ### Recovering old Data
 
 Before overwritting the existing files, plugin creates an archive in $TMPDIR folder, the filename and logs can be viewed in sublime console `(ctrl + `)`. you can unzip the gzip, untar and use it in case if you want the old directory.
+
+
+### Try Out
+
+Do you want to see what magic it does?
+Try syncing to local, the preferences from `27819a81-4f46-4fae-b89f-588951560aa6`.
+
+Wait...
+
+Wow! Your sublime looks different.
+
+This is a sample that i've uploaded, and its available in service and can be downloaded. you have something cool, you can upload yours, and other can download it. You can look at files Prefernce Settings User, to see whats different, or available, also Packages Contorl Settings to know about the list of available packages. This is more in a thought process similar to uploading and browsing themes, but with more customization.

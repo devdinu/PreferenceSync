@@ -1,0 +1,4 @@
+[
+    { "keys": ["alt+ctrl+u"], "command": "sync_preferences" },
+    { "keys": ["alt+ctrl+l"], "command": "sync_to_local" }
+]
