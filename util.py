@@ -11,4 +11,4 @@ class Util:
         location = settings.get(USER_PACKAGE_LOCATION)
         substituted_location = [folder if "$" not in folder
                                 else os.environ[folder[1:]] for folder in location.split("/")]
-        return "/".join(substituted_location)
+        return os.sep.join(substituted_location)

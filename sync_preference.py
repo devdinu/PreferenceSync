@@ -27,6 +27,7 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
     def get_files_to_sync(self):
         package_location = Util.get_user_package_location()
         exclude_files = self.settings.get(FILES_TO_EXCLUDE)
+        print(files_to_sync, "ll be synced.")
         files_to_sync = [file for file in os.listdir(package_location) if os.path.isfile(
             os.path.join(package_location, file)) and file not in exclude_files]
         return files_to_sync

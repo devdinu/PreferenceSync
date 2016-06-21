@@ -2,3 +2,4 @@
 .python-version
 .idea
 *.pyc
+*.tags*
