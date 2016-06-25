@@ -1,7 +1,6 @@
 {
     // Sync Preferences
     // only one env variable allowd in first, to have it as common
-    "user_package_location" : "$HOME/Library/Application Support/Sublime Text 3/Packages/User",
     "files_to_exclude_in_sync" : [
         "Package Control.last-run",
         "Package Control.ca-list",
@@ -10,5 +9,7 @@
         "Package Control.system-ca-bundle",
         "Package Control.cache/",
         "Package Control.ca-certs/"
-    ]
+    ],
+    // Sync any folder you wish!
+    "sync_folders": []
 }

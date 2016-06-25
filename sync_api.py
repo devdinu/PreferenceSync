@@ -11,11 +11,11 @@ class SyncApi:
         payload = {'files_to_sync': files}
         requests.post(self.host + "users/{0}/preferences.json".format(id), data=json.dumps(payload))
 
-    def sync_file(self, id, dir_name, file_name):
-        print("syncing file: " + file_name)
-        file_content = open(os.path.join(dir_name, file_name)).read()
-        requests.post(
-            self.host + "users/{0}/files/{1}/sync.json".format(id, file_name), data=file_content)
+    def sync_file(self, id, abs_file_name):
+        print("uploading file: " + abs_file_name)
+        file_name = os.path.basename(abs_file_name)
+        file_content = {'file_name': file_name, 'content': open(abs_file_name).read(), 'dir': os.path.dirname(abs_file_name)}
+        requests.post(self.host + "users/{0}/files/{1}/sync.json".format(id, file_name), json=file_content)
 
     def get_files_to_download(self, id):
         preference = requests.get(self.host + "users/{0}/preferences.json".format(id))

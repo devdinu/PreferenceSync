@@ -15,22 +15,32 @@ class SyncPreferencesCommand(sublime_plugin.TextCommand):
     settings = sublime.load_settings(SYNC_PREFERENCES_FILE)
     sync_api = SyncApi()
 
+    def _get_user_custom_sync_folder_files(self):
+        custom_sync_folders = self.settings.get(FOLDERS_TO_SYNC)
+        print("user defined custom folders: ", custom_sync_folders)
+        files = []
+        for folder in custom_sync_folders:
+            files += self.get_files_to_sync(folder)
+        return files
+
     def sync_files(self):
         print("sync files in progres...")
-        files_to_sync = self.get_files_to_sync()
+        files_to_sync = self.get_files_to_sync(
+            Util.get_user_package_location()) + self._get_user_custom_sync_folder_files()
         user_id = self._get_user_id()
         self.sync_api.sync_file_names(user_id, files_to_sync)
-        dir_name = Util.get_user_package_location()
         for file in files_to_sync:
-            self.sync_api.sync_file(user_id, dir_name, file)
+            self.sync_api.sync_file(user_id, file)
 
-    def get_files_to_sync(self):
-        package_location = Util.get_user_package_location()
+    def get_files_to_sync(self, sync_folder):
+
+        def can_include_file(file):
+            return os.path.isfile(os.path.join(sync_folder, file)) and file not in exclude_files
+
         exclude_files = self.settings.get(FILES_TO_EXCLUDE)
-        print(files_to_sync, "ll be synced.")
-        files_to_sync = [file for file in os.listdir(package_location) if os.path.isfile(
-            os.path.join(package_location, file)) and file not in exclude_files]
-        return files_to_sync
+        sync_folder = Util.substitute_env_variables(sync_folder)
+        return [os.path.join(sync_folder, file) for file in os.listdir(sync_folder) if can_include_file(file)]
+
 
     def _get_user_id(self):
         user_id = self.settings.get(USER_ID)
